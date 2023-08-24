@@ -1,0 +1,40 @@
+name: flutter_news_reader_app
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.5 <4.0.0'
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.0.7
+  get: ^4.6.5
+  http: ^1.1.0
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: SF-Pro-Bold
+      fonts:
+        - asset: assets/fonts/SF-Pro-Bold.ttf
+    - family: SF-Pro-Regular
+      fonts:
+        - asset: assets/fonts/SF-Pro-Regular.ttf
+    - family: SF-Pro-Medium
+      fonts:
+        - asset: assets/fonts/SF-Pro-Medium.ttf
+    - family: SF-Pro-RegularItalic
+      fonts:
+        - asset: assets/fonts/SF-Pro-RegularItalic.ttf
+  assets:
+    - assets/icons/
