@@ -18,10 +18,7 @@ class News extends StatelessWidget {
       print("${controller.newsModel.value?.articles[0].title}");
     }
 
-    // Bir kez çalıştırıp sonrasında yorum satırı haline getiriyorum...
     handleHomeController();
-
-    RxInt topBarIndex = 0.obs;
 
     return Scaffold(
         appBar: AppBar(
@@ -50,34 +47,65 @@ class News extends StatelessWidget {
               child: Row(
                 children: [
                   TopBarItem(
-                    text: "sa",
-                    selectedIndex: topBarIndex,
+                    text: "Top",
+                    selectedIndex: controller.topBarIndex,
                     index: 0,
                     onPressed: () {
-                      topBarIndex.value = 0;
-                      print(topBarIndex.value);
+                      controller.topBarIndex.value = 0;
+                      print(controller.topBarIndex);
+                      controller.fetchData();
                     },
                   ),
                   TopBarItem(
-                      text: "as",
-                      selectedIndex: topBarIndex,
+                      text: "Politics",
+                      selectedIndex: controller.topBarIndex,
                       index: 1,
                       onPressed: () {
-                        topBarIndex.value = 1;
-                        print(topBarIndex.value);
-                      })
+                        controller.topBarIndex.value = 1;
+                        print(controller.topBarIndex);
+                        controller.fetchData();
+                      }),
+                  TopBarItem(
+                      text: "Entertainment",
+                      selectedIndex: controller.topBarIndex,
+                      index: 2,
+                      onPressed: () {
+                        controller.topBarIndex.value = 2;
+                        print(controller.topBarIndex);
+                        controller.fetchData();
+                      }),
+                  TopBarItem(
+                      text: "Science",
+                      selectedIndex: controller.topBarIndex,
+                      index: 3,
+                      onPressed: () {
+                        controller.topBarIndex.value = 3;
+                        print(controller.topBarIndex);
+                        controller.fetchData();
+                      }),
+                  TopBarItem(
+                      text: "Technology",
+                      selectedIndex: controller.topBarIndex,
+                      index: 4,
+                      onPressed: () {
+                        controller.topBarIndex.value = 4;
+                        print(controller.topBarIndex);
+                        controller.fetchData();
+                      }),
                 ],
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: controller.newsModel.value?.articles.length ?? 0,
-                itemBuilder: (context, index) {
-                  final article = controller.newsModel.value?.articles[index];
-                  return Item(article: article);
-                },
+            Obx(
+              () => Expanded(
+                child: ListView.builder(
+                  itemCount: controller.newsModel.value?.articles.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final article = controller.newsModel.value?.articles[index];
+                    return Item(article: article);
+                  },
+                ),
               ),
-            ),
+            )
           ],
         ));
   }

@@ -17,15 +17,19 @@ class TopBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: selectedIndex.value == index ? Colors.black : Colors.white,
-          ),
-          child: Text(
-            text,
-            style: TextStyle(
-              color: selectedIndex.value == index ? Colors.white : Colors.black,
+    return Obx(() => Padding(
+          padding: const EdgeInsets.only(left: 15),
+          child: ElevatedButton(
+            onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+                backgroundColor: selectedIndex.value == index ? const Color(0xFF180E19) : const Color(0xFFEEEEEE),
+                elevation: 0,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: selectedIndex.value == index ? Colors.white : const Color(0xFF909090),
+              ),
             ),
           ),
         ));
