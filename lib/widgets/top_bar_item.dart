@@ -18,7 +18,7 @@ class TopBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Padding(
-          padding: const EdgeInsets.only(left: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
