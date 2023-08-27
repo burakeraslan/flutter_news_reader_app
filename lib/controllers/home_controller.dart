@@ -14,6 +14,7 @@ class HomeController {
 
   final newsModel = Rx<NewsModel?>(null);
   RxInt topBarIndex = 0.obs;
+  final selectedArticle = Rxn<Article>();
 
   Future<void> fetchData() async {
     String api = "";
