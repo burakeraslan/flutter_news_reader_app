@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_reader_app/controllers/home_controller.dart';
 import 'package:flutter_news_reader_app/models/news_model.dart';
+import 'package:flutter_news_reader_app/screens/news-screen/news_screen_controller.dart';
 import 'package:flutter_news_reader_app/screens/selected-news/selected_news.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +11,7 @@ class Item extends StatelessWidget {
   });
 
   final Article? article;
-  final selectedNewsController = Get.put(HomeController());
+  final selectedNewsController = Get.put(NewsScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,6 @@ class Item extends StatelessWidget {
         InkWell(
           onTap: () {
             Get.to(() => const SelectedNews());
-            // print("çalıştım");
             selectedNewsController.selectedArticle.value = article;
           },
           child: Container(

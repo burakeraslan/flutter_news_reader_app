@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_reader_app/controllers/home_controller.dart';
+import 'package:flutter_news_reader_app/screens/news-screen/news_screen_controller.dart';
 import 'package:flutter_news_reader_app/widgets/item.dart';
 import 'package:flutter_news_reader_app/widgets/top_bar_item.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class News extends StatelessWidget {
-  const News({super.key});
+class NewsScreen extends StatelessWidget {
+  const NewsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(HomeController());
+    final controller = Get.put(NewsScreenController());
 
     Future<void> handleHomeController() async {
       await controller.fetchData();
     }
 
-    // handleHomeController();
+    handleHomeController();
 
     return Scaffold(
         appBar: AppBar(
@@ -54,8 +54,7 @@ class News extends StatelessWidget {
                     index: 0,
                     onPressed: () {
                       controller.topBarIndex.value = 0;
-                      print(controller.topBarIndex);
-                      // controller.fetchData();
+                      controller.fetchData();
                     },
                   ),
                   TopBarItem(
@@ -64,8 +63,7 @@ class News extends StatelessWidget {
                       index: 1,
                       onPressed: () {
                         controller.topBarIndex.value = 1;
-                        print(controller.topBarIndex);
-                        // controller.fetchData();
+                        controller.fetchData();
                       }),
                   TopBarItem(
                       text: "Entertainment",
@@ -73,8 +71,7 @@ class News extends StatelessWidget {
                       index: 2,
                       onPressed: () {
                         controller.topBarIndex.value = 2;
-                        print(controller.topBarIndex);
-                        // controller.fetchData();
+                        controller.fetchData();
                       }),
                   TopBarItem(
                       text: "Science",
@@ -82,8 +79,7 @@ class News extends StatelessWidget {
                       index: 3,
                       onPressed: () {
                         controller.topBarIndex.value = 3;
-                        print(controller.topBarIndex);
-                        // controller.fetchData();
+                        controller.fetchData();
                       }),
                   TopBarItem(
                       text: "Technology",
@@ -91,8 +87,7 @@ class News extends StatelessWidget {
                       index: 4,
                       onPressed: () {
                         controller.topBarIndex.value = 4;
-                        print(controller.topBarIndex);
-                        // controller.fetchData();
+                        controller.fetchData();
                       }),
                 ],
               ),

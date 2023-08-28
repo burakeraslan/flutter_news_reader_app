@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_reader_app/controllers/home_controller.dart';
+import 'package:flutter_news_reader_app/screens/news-screen/news_screen_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -8,7 +8,7 @@ class SelectedNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedNewsController = Get.put(HomeController());
+    final selectedNewsController = Get.put(NewsScreenController());
 
     return Scaffold(
         appBar: AppBar(

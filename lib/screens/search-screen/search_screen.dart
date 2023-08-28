@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_reader_app/controllers/search_screen_controller.dart';
+import 'package:flutter_news_reader_app/screens/search-screen/search_screen_controller.dart';
+import 'package:flutter_news_reader_app/widgets/item.dart';
 import 'package:get/get.dart';
 
-class Search extends StatelessWidget {
-  const Search({super.key});
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +41,24 @@ class Search extends StatelessWidget {
                 //       TextEditingController().clear();
                 //     },
                 //     icon: const Icon(Icons.clear)),
+
                 // suffixIconColor: const Color(0xFF909090)
               ),
               onFieldSubmitted: (value) {
                 searchController.input.value = value;
-                print(searchController.input.value);
+                searchController.fetchData();
               },
+            ),
+          ),
+          Obx(
+            () => Expanded(
+              child: ListView.builder(
+                itemCount: searchController.newsModel.value?.articles.length ?? 0,
+                itemBuilder: (context, index) {
+                  final article = searchController.newsModel.value?.articles[index];
+                  return Item(article: article);
+                },
+              ),
             ),
           )
         ],
