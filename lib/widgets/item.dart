@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_news_reader_app/models/news_model.dart';
 import 'package:flutter_news_reader_app/screens/news-screen/news_screen_controller.dart';
 import 'package:flutter_news_reader_app/screens/selected-news/selected_news.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class Item extends StatelessWidget {
   Item({
@@ -15,6 +17,10 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final box = GetStorage();
+    List<Article>? bookmarkList = box.read<List<Article>>("bookmark");
+    print("length: ${bookmarkList?.length}");
+
     return Column(
       children: [
         InkWell(
@@ -66,10 +72,67 @@ class Item extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        Text(
-                          "${article?.publishedAt}",
-                          style: const TextStyle(fontSize: 13, fontFamily: "SF-Pro-Medium", color: Color(0xFF909090)),
-                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${article?.publishedAt}",
+                              style: const TextStyle(fontSize: 13, fontFamily: "SF-Pro-Medium", color: Color(0xFF909090)),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                Get.defaultDialog(backgroundColor: const Color(0xFFF6F7F5), actions: [
+                                  InkWell(
+                                    onTap: () {
+                                      print("Share");
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset("assets/icons/share.svg", width: 16, height: 16),
+                                        const Text(
+                                          "Share",
+                                          style: TextStyle(
+                                            fontFamily: "SF-Pro-Regular",
+                                            color: Color(0xFF180E19),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      if (article != null) {
+                                        List<Article>? bookmarkList = box.read<List<Article>>("bookmark");
+                                        if (bookmarkList == null) {
+                                          bookmarkList = [article!];
+                                        } else {
+                                          bookmarkList.add(article!);
+                                        }
+                                        box.write("bookmark", bookmarkList);
+                                      }
+                                      print(box.read("bookmark")[bookmarkList!.length - 1].title);
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset("assets/icons/bookmark-unselected.svg", width: 16, height: 16),
+                                        const Text(
+                                          "Bookmark",
+                                          style: TextStyle(
+                                            fontFamily: "SF-Pro-Regular",
+                                            color: Color(0xFF180E19),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ]);
+                              },
+                              icon: SvgPicture.asset("assets/icons/menu.svg", height: 24, width: 24),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),
