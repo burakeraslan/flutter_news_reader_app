@@ -10,12 +10,10 @@ class Item extends StatelessWidget {
   Item({
     super.key,
     required this.article,
-    required this.isBookmark,
   });
 
   final Article? article;
   final selectedNewsController = Get.put(NewsScreenController());
-  String? isBookmark;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +87,7 @@ class Item extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {
-                                getDialog(box, addBookmark, isBookmark!);
+                                getDialog(box, addBookmark);
                               },
                               icon: SvgPicture.asset("assets/icons/menu.svg", height: 24, width: 24),
                             ),
@@ -114,7 +112,7 @@ class Item extends StatelessWidget {
     );
   }
 
-  Future<dynamic> getDialog(GetStorage box, Future<dynamic> Function() addBookmark, isBookmark) {
+  Future<dynamic> getDialog(GetStorage box, Future<dynamic> Function() addBookmark) {
     return Get.defaultDialog(
       backgroundColor: const Color(0xFFF6F7F5),
       title: "",
@@ -150,9 +148,9 @@ class Item extends StatelessWidget {
             child: Row(
               children: [
                 SvgPicture.asset("assets/icons/bookmark-unselected.svg", width: 16, height: 16),
-                Text(
-                  isBookmark,
-                  style: const TextStyle(
+                const Text(
+                  "Bookmark",
+                  style: TextStyle(
                     fontFamily: "SF-Pro-Regular",
                     color: Color(0xFF180E19),
                   ),

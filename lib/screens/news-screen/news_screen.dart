@@ -102,7 +102,7 @@ class NewsScreen extends StatelessWidget {
                 itemCount: controller.newsModel.value?.articles.length ?? 0,
                 itemBuilder: (context, index) {
                   final article = controller.newsModel.value?.articles[index];
-                  return Item(article: article, isBookmark: "Bookmark");
+                  return Item(article: article);
                 },
               ),
             ),
