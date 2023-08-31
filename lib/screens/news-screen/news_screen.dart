@@ -4,7 +4,6 @@ import 'package:flutter_news_reader_app/widgets/item.dart';
 import 'package:flutter_news_reader_app/widgets/top_bar_item.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
@@ -18,9 +17,6 @@ class NewsScreen extends StatelessWidget {
     }
 
     // handleHomeController();
-
-    final box = GetStorage();
-    print(box.read("bookmark"));
 
     return Scaffold(
       appBar: AppBar(
@@ -106,7 +102,7 @@ class NewsScreen extends StatelessWidget {
                 itemCount: controller.newsModel.value?.articles.length ?? 0,
                 itemBuilder: (context, index) {
                   final article = controller.newsModel.value?.articles[index];
-                  return Item(article: article);
+                  return Item(article: article, isBookmark: "Bookmark");
                 },
               ),
             ),

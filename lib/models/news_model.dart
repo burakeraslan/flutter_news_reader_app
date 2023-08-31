@@ -30,6 +30,19 @@ class Article {
 
   Article({this.source, this.author, this.title, this.description, this.url, this.urlToImage, this.publishedAt, this.content});
 
+  Map<String, dynamic> toJson() {
+    return {
+      "source": source?.toJson(),
+      "author": author,
+      "title": title,
+      "description": description,
+      "url": url,
+      "urlToImage": urlToImage,
+      "publishedAt": publishedAt,
+      "content": content,
+    };
+  }
+
   factory Article.fromJson(Map<String, dynamic> json) {
     return Article(
       source: json["source"] != null ? Source.fromJson(json["source"]) : null,
@@ -52,6 +65,13 @@ class Source {
     this.id,
     this.name,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
+    };
+  }
 
   factory Source.fromJson(Map<String, dynamic> json) {
     return Source(

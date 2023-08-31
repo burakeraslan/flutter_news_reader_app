@@ -10,16 +10,22 @@ class Item extends StatelessWidget {
   Item({
     super.key,
     required this.article,
+    required this.isBookmark,
   });
 
   final Article? article;
   final selectedNewsController = Get.put(NewsScreenController());
+  String? isBookmark;
 
   @override
   Widget build(BuildContext context) {
     final box = GetStorage();
-    List<Article>? bookmarkList = box.read<List<Article>>("bookmark");
-    print("length: ${bookmarkList?.length}");
+    List<dynamic> bookmarks = box.read("bookmarks") ?? [];
+
+    Future addBookmark() async {
+      bookmarks.add(article!.toJson());
+      await box.write("bookmarks", bookmarks);
+    }
 
     return Column(
       children: [
@@ -83,51 +89,7 @@ class Item extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {
-                                Get.defaultDialog(backgroundColor: const Color(0xFFF6F7F5), actions: [
-                                  InkWell(
-                                    onTap: () {
-                                      print("Share");
-                                    },
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset("assets/icons/share.svg", width: 16, height: 16),
-                                        const Text(
-                                          "Share",
-                                          style: TextStyle(
-                                            fontFamily: "SF-Pro-Regular",
-                                            color: Color(0xFF180E19),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      if (article != null) {
-                                        List<Article>? bookmarkList = box.read<List<Article>>("bookmark");
-                                        if (bookmarkList == null) {
-                                          bookmarkList = [article!];
-                                        } else {
-                                          bookmarkList.add(article!);
-                                        }
-                                        box.write("bookmark", bookmarkList);
-                                      }
-                                      print(box.read("bookmark")[bookmarkList!.length - 1].title);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset("assets/icons/bookmark-unselected.svg", width: 16, height: 16),
-                                        const Text(
-                                          "Bookmark",
-                                          style: TextStyle(
-                                            fontFamily: "SF-Pro-Regular",
-                                            color: Color(0xFF180E19),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ]);
+                                getDialog(box, addBookmark, isBookmark!);
                               },
                               icon: SvgPicture.asset("assets/icons/menu.svg", height: 24, width: 24),
                             ),
@@ -149,6 +111,57 @@ class Item extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  Future<dynamic> getDialog(GetStorage box, Future<dynamic> Function() addBookmark, isBookmark) {
+    return Get.defaultDialog(
+      backgroundColor: const Color(0xFFF6F7F5),
+      title: "",
+      content: Column(
+        children: [
+          InkWell(
+            onTap: () {
+              // share
+              Get.back();
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset("assets/icons/share.svg", width: 16, height: 16),
+                const Text(
+                  "Share",
+                  style: TextStyle(
+                    fontFamily: "SF-Pro-Regular",
+                    color: Color(0xFF180E19),
+                  ),
+                )
+              ],
+            ),
+          ),
+          const Divider(
+            color: Color(0xFFEEEEEE),
+            thickness: 1,
+          ),
+          InkWell(
+            onTap: () {
+              addBookmark();
+              Get.back();
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset("assets/icons/bookmark-unselected.svg", width: 16, height: 16),
+                Text(
+                  isBookmark,
+                  style: const TextStyle(
+                    fontFamily: "SF-Pro-Regular",
+                    color: Color(0xFF180E19),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ).paddingOnly(top: 0, left: 20, right: 20, bottom: 10),
     );
   }
 }

@@ -56,7 +56,7 @@ class SearchScreen extends StatelessWidget {
                 itemCount: searchController.newsModel.value?.articles.length ?? 0,
                 itemBuilder: (context, index) {
                   final article = searchController.newsModel.value?.articles[index];
-                  return Item(article: article);
+                  return Item(article: article, isBookmark: "Bookmark");
                 },
               ),
             ),
