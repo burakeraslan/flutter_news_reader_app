@@ -1,16 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_reader_app/models/news_model.dart';
 import 'package:flutter_news_reader_app/screens/news_page/news_page_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-class SelectedNews extends StatelessWidget {
-  const SelectedNews({super.key});
+class NewsDetailPage extends StatelessWidget {
+  const NewsDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final selectedNewsController = Get.put(
       NewsPageController(),
     );
+
+    final box = GetStorage();
+    List<dynamic> bookmarks = box.read("bookmarks") ?? [];
+    String bookmarked = bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == selectedNewsController.selectedArticle.value?.url) != -1
+        ? "assets/icons/bookmark-selected.svg"
+        : "assets/icons/bookmark-unselected.svg";
+
+    // now add and delete bookmark, and update app
+    Future addAndDeleteBookmark() async {
+      if (bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == selectedNewsController.selectedArticle.value?.url) != -1) {
+        // find index of bookmark
+        int indexToDelete = bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == selectedNewsController.selectedArticle.value?.url);
+
+        if (indexToDelete != -1) {
+          // delete bookmark
+          bookmarks.removeAt(indexToDelete);
+          await box.write("bookmarks", bookmarks);
+          Get.forceAppUpdate();
+        }
+      } else {
+        // add bookmark
+        bookmarks.add(selectedNewsController.selectedArticle.value?.toJson());
+        await box.write("bookmarks", bookmarks);
+        Get.forceAppUpdate();
+      }
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -25,7 +53,7 @@ class SelectedNews extends StatelessWidget {
             },
           ),
           actions: [
-            IconButton(onPressed: () {}, icon: SvgPicture.asset("assets/icons/bookmark-unselected.svg", height: 24, width: 24)),
+            IconButton(onPressed: () => addAndDeleteBookmark(), icon: SvgPicture.asset(bookmarked, height: 24, width: 24)),
             IconButton(onPressed: () {}, icon: SvgPicture.asset("assets/icons/share.svg", height: 24, width: 24))
           ],
           toolbarHeight: 75,

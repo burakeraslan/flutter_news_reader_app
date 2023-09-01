@@ -53,7 +53,7 @@ class Item extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            Get.to(() => const SelectedNews());
+            Get.to(() => const NewsDetailPage());
             selectedNewsController.selectedArticle.value = article;
           },
           child: Container(
