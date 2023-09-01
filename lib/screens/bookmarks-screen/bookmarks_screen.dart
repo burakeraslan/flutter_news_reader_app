@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_reader_app/models/news_model.dart';
-import 'package:flutter_news_reader_app/screens/news-screen/news_screen_controller.dart';
-import 'package:flutter_news_reader_app/screens/selected-news/selected_news.dart';
+import 'package:flutter_news_reader_app/screens/news_page/news_page_controller.dart';
+import 'package:flutter_news_reader_app/screens/news_page/sub/news_detail_page.dart/news_detail_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,7 +15,9 @@ class BookmarksScreen extends StatelessWidget {
     List<dynamic> bookmarks = box.read("bookmarks") ?? [];
     List<Article> bookmarkedArticles = bookmarks.map((e) => Article.fromJson(e)).toList();
 
-    final selectedNewsController = Get.put(NewsScreenController());
+    final selectedNewsController = Get.put(
+      NewsPageController(),
+    );
 
     Future deleteBookmark(Article articleToDelete) async {
       int indexToDelete = bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == articleToDelete.url);
@@ -55,6 +57,7 @@ class BookmarksScreen extends StatelessWidget {
         itemCount: bookmarkedArticles.length,
         itemBuilder: (context, index) {
           final article = bookmarkedArticles[index];
+          if (article.urlToImage == null || article.urlToImage!.isEmpty) return const SizedBox();
           return Column(
             children: [
               InkWell(

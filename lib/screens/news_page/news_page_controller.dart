@@ -5,7 +5,17 @@ import 'package:flutter_news_reader_app/models/news_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class NewsScreenController extends GetxController {
+class NewsPageController extends GetxController {
+  @override
+  void onInit() {
+    _init();
+    super.onInit();
+  }
+
+  Future<void> _init() async {
+    await loadNews();
+  }
+
   String apiKey = "e54811512d1c438db37939179e4f5c1f";
   List<String> categories = [
     "top-headlines?country=us",
@@ -19,7 +29,7 @@ class NewsScreenController extends GetxController {
   RxInt topBarIndex = 0.obs;
   final selectedArticle = Rxn<Article>();
 
-  Future<void> fetchData() async {
+  Future<void> loadNews() async {
     String category = categories[topBarIndex.value];
     String api = "https://newsapi.org/v2/$category&apiKey=$apiKey";
     var response = await http.get(Uri.parse(api));
@@ -35,5 +45,12 @@ class NewsScreenController extends GetxController {
     } catch (e) {
       debugPrint("Exception: $e");
     }
+    update();
+  }
+
+  void changeTab(int index) {
+    topBarIndex.value = index;
+    update();
+    loadNews();
   }
 }

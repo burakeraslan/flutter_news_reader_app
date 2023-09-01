@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_reader_app/models/news_model.dart';
-import 'package:flutter_news_reader_app/screens/news-screen/news_screen_controller.dart';
-import 'package:flutter_news_reader_app/screens/selected-news/selected_news.dart';
+import 'package:flutter_news_reader_app/screens/news_page/news_page_controller.dart';
+import 'package:flutter_news_reader_app/screens/news_page/sub/news_detail_page.dart/news_detail_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,7 +13,9 @@ class Item extends StatelessWidget {
   });
 
   final Article? article;
-  final selectedNewsController = Get.put(NewsScreenController());
+  final selectedNewsController = Get.put(
+    NewsPageController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -38,24 +40,29 @@ class Item extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (article?.urlToImage == null || article?.urlToImage?.isEmpty == true)
-                  Container(
-                    width: 140,
-                    height: 140,
-                    color: const Color(0xFF909090),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      "No Image",
-                      style: TextStyle(fontSize: 18, color: Colors.white, fontFamily: "SF-Pro-Bold"),
-                    ),
-                  )
-                else
-                  Image.network(
-                    "${article?.urlToImage}",
-                    width: 140,
-                    height: 140,
-                    fit: BoxFit.cover,
-                  ),
+                Image.network(
+                  "${article?.urlToImage}",
+                  width: 140,
+                  height: 140,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      width: 140,
+                      height: 140,
+                      color: const Color(0xFF909090),
+                      alignment: Alignment.center,
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        radius: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      ),
+                    );
+                  },
+                ),
                 Flexible(
                   child: Container(
                     margin: const EdgeInsetsDirectional.only(start: 10),
