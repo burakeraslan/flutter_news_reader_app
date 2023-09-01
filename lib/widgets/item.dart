@@ -22,9 +22,31 @@ class Item extends StatelessWidget {
     final box = GetStorage();
     List<dynamic> bookmarks = box.read("bookmarks") ?? [];
 
-    Future addBookmark() async {
-      bookmarks.add(article!.toJson());
-      await box.write("bookmarks", bookmarks);
+    // dynamik bookmark icon
+    String icon =
+        bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url) != -1 ? "assets/icons/bookmark-selected.svg" : "assets/icons/bookmark-unselected.svg";
+
+    // dynamik bookmark text
+    String bookmarked = bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url) != -1 ? "Remove Bookmark" : "Bookmark";
+
+    // add and delete bookmark, and update app
+    Future addAndDeleteBookmark() async {
+      if (bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url) != -1) {
+        // find index of bookmark
+        int indexToDelete = bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url);
+
+        if (indexToDelete != -1) {
+          // delete bookmark
+          bookmarks.removeAt(indexToDelete);
+          await box.write("bookmarks", bookmarks);
+          Get.forceAppUpdate();
+        }
+      } else {
+        // add bookmark
+        bookmarks.add(article!.toJson());
+        await box.write("bookmarks", bookmarks);
+        Get.forceAppUpdate();
+      }
     }
 
     return Column(
@@ -80,7 +102,7 @@ class Item extends StatelessWidget {
                         Text(
                           "${article?.author}",
                           style: const TextStyle(fontSize: 13, fontFamily: "SF-Pro-Medium", color: Color(0xFF909090)),
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Row(
@@ -94,7 +116,7 @@ class Item extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {
-                                getDialog(box, addBookmark);
+                                getDialog(addAndDeleteBookmark, icon, bookmarked);
                               },
                               icon: SvgPicture.asset("assets/icons/menu.svg", height: 24, width: 24),
                             ),
@@ -119,7 +141,7 @@ class Item extends StatelessWidget {
     );
   }
 
-  Future<dynamic> getDialog(GetStorage box, Future<dynamic> Function() addBookmark) {
+  Future<dynamic> getDialog(Future<dynamic> Function() addAndDeleteBookmark, String icon, String bookmarked) {
     return Get.defaultDialog(
       backgroundColor: const Color(0xFFF6F7F5),
       title: "",
@@ -149,15 +171,15 @@ class Item extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              addBookmark();
+              addAndDeleteBookmark();
               Get.back();
             },
             child: Row(
               children: [
-                SvgPicture.asset("assets/icons/bookmark-unselected.svg", width: 16, height: 16),
-                const Text(
-                  "Bookmark",
-                  style: TextStyle(
+                SvgPicture.asset(icon, width: 16, height: 16),
+                Text(
+                  bookmarked,
+                  style: const TextStyle(
                     fontFamily: "SF-Pro-Regular",
                     color: Color(0xFF180E19),
                   ),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_reader_app/screens/search-screen/search_screen_controller.dart';
+import 'package:flutter_news_reader_app/screens/search_page/search_page_controller.dart';
 import 'package:flutter_news_reader_app/widgets/item.dart';
 import 'package:get/get.dart';
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+class SearchPage extends StatelessWidget {
+  const SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final searchController = Get.put(SearchScreenController());
+    final searchController = Get.put(SearchPageController());
 
     return Scaffold(
       appBar: AppBar(

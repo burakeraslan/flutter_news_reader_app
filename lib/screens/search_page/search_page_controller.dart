@@ -5,7 +5,7 @@ import 'package:flutter_news_reader_app/models/news_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class SearchScreenController extends GetxController {
+class SearchPageController extends GetxController {
   RxString input = "".obs;
   String apiKey = "e54811512d1c438db37939179e4f5c1f";
 
