@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_reader_app/models/news_model.dart';
-import 'package:flutter_news_reader_app/screens/news_page/news_page_controller.dart';
-import 'package:flutter_news_reader_app/screens/news_page/sub/news_detail_page.dart/news_detail_page.dart';
+import 'package:flutter_news_reader_app/pages/news_page/news_page_controller.dart';
+import 'package:flutter_news_reader_app/pages/news_page/sub/news_detail_page.dart/news_detail_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Item extends StatelessWidget {
   Item({
@@ -22,27 +23,21 @@ class Item extends StatelessWidget {
     final box = GetStorage();
     List<dynamic> bookmarks = box.read("bookmarks") ?? [];
 
-    // dynamik bookmark icon
     String icon =
         bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url) != -1 ? "assets/icons/bookmark-selected.svg" : "assets/icons/bookmark-unselected.svg";
 
-    // dynamik bookmark text
     String bookmarked = bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url) != -1 ? "Remove Bookmark" : "Bookmark";
 
-    // add and delete bookmark, and update app
     Future addAndDeleteBookmark() async {
       if (bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url) != -1) {
-        // find index of bookmark
         int indexToDelete = bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url);
 
         if (indexToDelete != -1) {
-          // delete bookmark
           bookmarks.removeAt(indexToDelete);
           await box.write("bookmarks", bookmarks);
           Get.forceAppUpdate();
         }
       } else {
-        // add bookmark
         bookmarks.add(article!.toJson());
         await box.write("bookmarks", bookmarks);
         Get.forceAppUpdate();
@@ -58,7 +53,7 @@ class Item extends StatelessWidget {
           },
           child: Container(
             margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-            height: 180,
+            height: 160,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -95,8 +90,8 @@ class Item extends StatelessWidget {
                       children: [
                         Text(
                           "${article?.title}",
-                          style: const TextStyle(fontSize: 14, fontFamily: "SF-Pro-Bold", color: Color(0xFF180E19)),
-                          maxLines: 5,
+                          style: const TextStyle(fontSize: 15, fontFamily: "SF-Pro-Bold", color: Color(0xFF180E19)),
+                          maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
@@ -108,17 +103,23 @@ class Item extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "${article?.publishedAt}",
-                              style: const TextStyle(fontSize: 13, fontFamily: "SF-Pro-Medium", color: Color(0xFF909090)),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                "${article?.publishedAt}",
+                                style: const TextStyle(fontSize: 13, fontFamily: "SF-Pro-Medium", color: Color(0xFF909090)),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                getDialog(addAndDeleteBookmark, icon, bookmarked);
-                              },
-                              icon: SvgPicture.asset("assets/icons/menu.svg", height: 24, width: 24),
+                            Expanded(
+                              flex: 1,
+                              child: IconButton(
+                                  onPressed: () {
+                                    getDialog(addAndDeleteBookmark, icon, bookmarked);
+                                  },
+                                  icon: SvgPicture.asset("assets/icons/menu.svg"),
+                                  alignment: Alignment.bottomRight),
                             ),
                           ],
                         )
@@ -149,7 +150,7 @@ class Item extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              // share
+              Share.share("${article?.url}");
               Get.back();
             },
             child: Row(

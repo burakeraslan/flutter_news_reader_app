@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_reader_app/screens/home_page/home_page_controller.dart';
+import 'package:flutter_news_reader_app/pages/home_page/home_page_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 

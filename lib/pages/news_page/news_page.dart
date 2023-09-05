@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_reader_app/screens/news_page/news_page_controller.dart';
+import 'package:flutter_news_reader_app/pages/news_page/news_page_controller.dart';
 import 'package:flutter_news_reader_app/widgets/item.dart';
 import 'package:flutter_news_reader_app/widgets/top_bar_item.dart';
 import 'package:flutter_svg/flutter_svg.dart';

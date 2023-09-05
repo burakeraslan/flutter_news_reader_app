@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_reader_app/screens/news_page/news_page_controller.dart';
+import 'package:flutter_news_reader_app/pages/news_page/news_page_controller.dart';
 import 'package:get/get.dart';
 
 class TopBarItem extends StatelessWidget {

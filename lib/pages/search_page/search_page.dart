@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_reader_app/screens/search_page/search_page_controller.dart';
+import 'package:flutter_news_reader_app/pages/search_page/search_page_controller.dart';
 import 'package:flutter_news_reader_app/widgets/item.dart';
 import 'package:get/get.dart';
 
