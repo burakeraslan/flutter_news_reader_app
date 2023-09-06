@@ -14,7 +14,6 @@ class HomePageController extends GetxController {
 
   void changePage(int index) {
     currentIndex = index;
-
     update();
   }
 }
