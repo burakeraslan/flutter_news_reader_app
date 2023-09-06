@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_reader_app/core/services/locale_services.dart';
 import 'package:flutter_news_reader_app/models/news_model.dart';
 import 'package:flutter_news_reader_app/pages/news_page/news_page_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,8 +20,8 @@ class NewsDetailPage extends StatelessWidget {
     final box = GetStorage();
     List<dynamic> bookmarks = box.read("bookmarks") ?? [];
     String bookmarked = bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == selectedNewsController.selectedArticle.value?.url) != -1
-        ? "assets/icons/bookmark-selected.svg"
-        : "assets/icons/bookmark-unselected.svg";
+        ? SvgIcon.bookmarkSelected
+        : SvgIcon.bookmarkUnselected;
 
     Future addAndDeleteBookmark() async {
       if (bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == selectedNewsController.selectedArticle.value?.url) != -1) {
@@ -42,7 +43,7 @@ class NewsDetailPage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: SvgPicture.asset(
-            "assets/icons/chevron-left.svg",
+            SvgIcon.chevronLeft,
             height: 24,
             width: 24,
           ),
@@ -63,7 +64,7 @@ class NewsDetailPage extends StatelessWidget {
                 Share.share("${selectedNewsController.selectedArticle.value?.url}");
               },
               icon: SvgPicture.asset(
-                "assets/icons/share.svg",
+                SvgIcon.share,
                 height: 24,
                 width: 24,
               ))
@@ -82,7 +83,12 @@ class NewsDetailPage extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  Text("${selectedNewsController.selectedArticle.value?.title}", style: const TextStyle(fontSize: 20, fontFamily: "SF-Pro-Bold", color: Color(0xFF180E19))),
+                  Text("${selectedNewsController.selectedArticle.value?.title}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontFamily: "SF-Pro-Bold",
+                        color: Color(0xFF180E19),
+                      )),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Row(
@@ -92,7 +98,11 @@ class NewsDetailPage extends StatelessWidget {
                           flex: 3,
                           child: Text(
                             "${selectedNewsController.selectedArticle.value?.author}",
-                            style: const TextStyle(fontSize: 13, fontFamily: "SF-Pro-Medium", color: Color(0xFF909090)),
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontFamily: "SF-Pro-Medium",
+                              color: Color(0xFF909090),
+                            ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -101,7 +111,11 @@ class NewsDetailPage extends StatelessWidget {
                           flex: 2,
                           child: Text(
                             "${selectedNewsController.selectedArticle.value?.publishedAt}",
-                            style: const TextStyle(fontSize: 13, fontFamily: "SF-Pro-Medium", color: Color(0xFF909090)),
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontFamily: "SF-Pro-Medium",
+                              color: Color(0xFF909090),
+                            ),
                           ),
                         )
                       ],
@@ -109,8 +123,12 @@ class NewsDetailPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
-                    child:
-                        Text("${selectedNewsController.selectedArticle.value?.content}", style: const TextStyle(fontSize: 15, fontFamily: "SF-Pro-Regular", color: Color(0xFF180E19))),
+                    child: Text("${selectedNewsController.selectedArticle.value?.content}",
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontFamily: "SF-Pro-Regular",
+                          color: Color(0xFF180E19),
+                        )),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
@@ -130,7 +148,10 @@ class NewsDetailPage extends StatelessWidget {
                           launch(articleUrl);
                         }
                       },
-                      child: const Text("Read more", style: TextStyle(fontSize: 15, fontFamily: "SF-Pro-Medium", color: Colors.white)),
+                      child: const Text(
+                        "Read more",
+                        style: TextStyle(fontSize: 15, fontFamily: "SF-Pro-Medium", color: Colors.white),
+                      ),
                     ),
                   )
                 ],

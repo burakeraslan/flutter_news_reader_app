@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_reader_app/core/services/locale_services.dart';
 import 'package:flutter_news_reader_app/pages/home_page/home_page_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -19,18 +20,18 @@ class HomePage extends StatelessWidget {
           bottomNavigationBar: BottomNavigationBar(
             items: [
               BottomNavigationBarItem(
-                icon: SvgPicture.asset("assets/icons/home-unselected.svg"),
-                activeIcon: SvgPicture.asset("assets/icons/home-selected.svg"),
+                icon: SvgPicture.asset(SvgIcon.homeUnselected),
+                activeIcon: SvgPicture.asset(SvgIcon.homeSelected),
                 label: "News",
               ),
               BottomNavigationBarItem(
-                icon: SvgPicture.asset("assets/icons/search-unselected.svg"),
-                activeIcon: SvgPicture.asset("assets/icons/search-selected.svg"),
+                icon: SvgPicture.asset(SvgIcon.searchUnselected),
+                activeIcon: SvgPicture.asset(SvgIcon.searchSelected),
                 label: "Search",
               ),
               BottomNavigationBarItem(
-                icon: SvgPicture.asset("assets/icons/bookmark-unselected.svg"),
-                activeIcon: SvgPicture.asset("assets/icons/bookmark-selected.svg"),
+                icon: SvgPicture.asset(SvgIcon.bookmarkUnselected),
+                activeIcon: SvgPicture.asset(SvgIcon.bookmarkSelected),
                 label: "Bookmarks",
               ),
             ],

@@ -10,27 +10,29 @@ class BookmarksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(
-      BookmarsPageController(),
+      BookmarksPageController(),
     );
     return Scaffold(
       appBar: const Header(),
       backgroundColor: Colors.white,
-      body: GetBuilder<BookmarsPageController>(
+      body: GetBuilder<BookmarksPageController>(
         builder: (_) {
-          return Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              for (int i = 0; i < _.bookmarkedArticles.length; i++) ...[
-                Item(
-                  article: _.bookmarkedArticles[i],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ]
-            ],
+          // return Column(
+          //   children: [
+          //     for (int i = 0; i < _.bookmarkedArticles.length; i++) ...[
+          //       Item(
+          //         article: _.bookmarkedArticles[i],
+          //       ),
+          //     ]
+          //   ],
+          // );
+          return ListView.builder(
+            itemCount: _.bookmarkedArticles.length,
+            itemBuilder: (context, index) {
+              return Item(
+                article: _.bookmarkedArticles[index],
+              );
+            },
           );
         },
       ),

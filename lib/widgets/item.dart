@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_reader_app/core/services/locale_services.dart';
 import 'package:flutter_news_reader_app/models/news_model.dart';
 import 'package:flutter_news_reader_app/pages/news_page/news_page_controller.dart';
 import 'package:flutter_news_reader_app/pages/news_page/sub/news_detail_page.dart/news_detail_page.dart';
@@ -23,8 +24,7 @@ class Item extends StatelessWidget {
     final box = GetStorage();
     List<dynamic> bookmarks = box.read("bookmarks") ?? [];
 
-    String icon =
-        bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url) != -1 ? "assets/icons/bookmark-selected.svg" : "assets/icons/bookmark-unselected.svg";
+    String icon = bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url) != -1 ? SvgIcon.bookmarkSelected : SvgIcon.bookmarkUnselected;
 
     String bookmarked = bookmarks.indexWhere((bookmark) => Article.fromJson(bookmark).url == article!.url) != -1 ? "Remove Bookmark" : "Bookmark";
 
@@ -118,7 +118,7 @@ class Item extends StatelessWidget {
                                   onPressed: () {
                                     getDialog(addAndDeleteBookmark, icon, bookmarked);
                                   },
-                                  icon: SvgPicture.asset("assets/icons/menu.svg"),
+                                  icon: SvgPicture.asset(SvgIcon.menu),
                                   alignment: Alignment.bottomRight),
                             ),
                           ],
@@ -155,7 +155,11 @@ class Item extends StatelessWidget {
             },
             child: Row(
               children: [
-                SvgPicture.asset("assets/icons/share.svg", width: 16, height: 16),
+                SvgPicture.asset(
+                  SvgIcon.share,
+                  width: 16,
+                  height: 16,
+                ),
                 const Text(
                   "Share",
                   style: TextStyle(

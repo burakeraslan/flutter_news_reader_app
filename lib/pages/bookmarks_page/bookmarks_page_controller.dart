@@ -2,7 +2,7 @@ import 'package:flutter_news_reader_app/models/news_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class BookmarsPageController extends GetxController {
+class BookmarksPageController extends GetxController {
   final box = GetStorage();
   late List<dynamic> bookmarks;
   late List<Article> bookmarkedArticles;

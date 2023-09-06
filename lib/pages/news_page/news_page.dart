@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_reader_app/core/services/locale_services.dart';
 import 'package:flutter_news_reader_app/pages/news_page/news_page_controller.dart';
 import 'package:flutter_news_reader_app/widgets/item.dart';
 import 'package:flutter_news_reader_app/widgets/top_bar_item.dart';
@@ -22,7 +23,7 @@ class NewsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 5),
               child: SvgPicture.asset(
-                "assets/icons/news-logo.svg",
+                SvgIcon.newsLogo,
                 height: 24,
                 width: 24,
               ),
